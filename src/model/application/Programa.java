@@ -1,5 +1,6 @@
 package model.application;
 
+import java.util.InputMismatchException;
 import java.util.Locale;
 import java.util.Scanner;
 
@@ -13,7 +14,6 @@ public class Programa {
 		Locale.setDefault(Locale.US);
 		Scanner sc = new Scanner(System.in);
 		
-		try {
 		System.out.println("------ Digite os dados da conta bancaria: ------");
 		System.out.print("Numero da conta: ");
 		int numeroConta = sc.nextInt();
@@ -37,7 +37,7 @@ public class Programa {
 			auxiliar = sc.nextInt();
 		}
 		
-		
+		try {
 		if(auxiliar == 1) {
 			System.out.print("Digite o valor do saque: ");
 			double valorSaque = sc.nextDouble();
@@ -48,14 +48,19 @@ public class Programa {
 			System.out.print("Digite o valor do deposito: ");
 			double valorDeposito = sc.nextDouble();
 			conta.deposito(valorDeposito);
-		}
-	
+			}
 		System.out.println("\nAtualizacao concluida");
 		System.out.println(conta);
 		}
 		
+	
+		
 		catch (saqueInvalidoException e) {
 			System.out.println("Impossivel realizar o saque: " + e.getMessage());
+		}
+		
+		catch(InputMismatchException e) {
+            System.out.println("Erro: entrada invalida. Por favor, insira os dados corretamente.");
 		}
 
 		catch (IllegalArgumentException e) {
@@ -64,11 +69,12 @@ public class Programa {
 		catch (RuntimeException e) {
 			System.out.println("Erro inesperado!");
 		}
+
+		finally {
+			sc.close();
+		}
 		
 		
-		
-		
-		sc.close();
 	}
 
 }

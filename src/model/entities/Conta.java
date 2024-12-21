@@ -46,18 +46,21 @@ public class Conta {
 	}
 	
 	public void saque(double quantia) throws saqueInvalidoException{
-		
-		if(quantia > limiteDeRetirada) {
-			throw new saqueInvalidoException("Quantia excede o limite de saque da conta");
-		}
-		if(saldo == 0) {
-			throw new saqueInvalidoException("Nao existe saldo nessa conta");
-		}
+		validacaoSaque(quantia);
 		this.saldo -= quantia;
 	}
 	
 	public void deposito(double quantia) {
 		this.saldo += quantia;
+	}
+	
+	public void validacaoSaque(double quantia) throws saqueInvalidoException {
+		if(quantia > limiteDeRetirada) {
+			throw new saqueInvalidoException ("Quantia excede o limite de saque da conta");
+		}
+		if(saldo == 0) {
+			throw new saqueInvalidoException("Nao existe saldo nessa conta");
+		}
 	}
 
 	@Override
